@@ -3,6 +3,10 @@ import random #this is called a module
 def printWelcomeMessage():
     print("Welcome to The Dice Game")
 
+def askHowManyUsers(userNumberofPlayersAllowed): #userNumberofPlayers is an argument
+    howManyUsers = int(input ("How many people are playing today? Maximum No: " +  str (userNumberofPlayersAllowed)+ " "))
+    return howManyUsers
+
 def askUserName():
     userName = input ("What is your name?: ")
     return userName
@@ -20,14 +24,23 @@ def rollDice(): #defining a function
         dieValuesList.append(randomNumber) #appends (or adds) randomNumber to the dieValuesList
     return dieValuesList
 
+# This function take in a user list accumulates it and then returns it.
 def getSumOfRollDice(userDieValueList): #userDieValueList is a parameter (placeholder)
     sumOfRollDice = 0
     for currentDieValue in userDieValueList:
         sumOfRollDice = sumOfRollDice + currentDieValue 
     return sumOfRollDice
 
+# 
 def main():
+    numberOfPlayersAllowed = 6
     printWelcomeMessage() #don't forget parenthesis to call the function
+    howManyUsersInMain = askHowManyUsers(numberOfPlayersAllowed)
+
+    while howManyUsersInMain > numberOfPlayersAllowed:
+        revisedNumberofUsers = int(input ("sorry, the maximum number of players is " + str (numberOfPlayersAllowed) + ", please enter again: "))
+        howManyUsersInMain = revisedNumberofUsers
+        
     userNameInMain = askUserName()
     greetUser(userNameInMain)
     dieValuesListInMain = rollDice() 
