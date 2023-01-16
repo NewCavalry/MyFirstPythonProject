@@ -14,6 +14,22 @@ def askUserName():
 def greetUser(userName):
     print("Hi", userName)
 
+def getPlayerResults(totalNumberOfPlayers):
+    playerNamesList = []
+    for currentUserNumber in range(1, totalNumberOfPlayers + 1):
+        print("Player", currentUserNumber,)
+        currentPlayerName = askUserName()
+        playerNamesList.append(currentPlayerName)
+
+    for currentNameIndex in range(totalNumberOfPlayers):
+        userInput = input(playerNamesList [currentNameIndex] + " Hit enter to Roll")
+        currentUserDieValueList = rollDice()
+        currentUserDieTotal = getSumOfRollDice(currentUserDieValueList)
+        print(currentUserDieValueList)
+
+    return playerNamesList
+
+
 def rollDice(): #defining a function
     numberOfDice = 6
     dieRangeStart = 1 #relates to the randint function
@@ -30,7 +46,6 @@ def getSumOfRollDice(userDieValueList): #userDieValueList is a parameter (placeh
     for currentDieValue in userDieValueList:
         sumOfRollDice = sumOfRollDice + currentDieValue 
     return sumOfRollDice
-
 # 
 def main():
     numberOfPlayersAllowed = 6
@@ -41,12 +56,8 @@ def main():
         revisedNumberofUsers = int(input ("sorry, the maximum number of players is " + str (numberOfPlayersAllowed) + ", please enter again: "))
         howManyUsersInMain = revisedNumberofUsers
         
-    userNameInMain = askUserName()
-    greetUser(userNameInMain)
-    dieValuesListInMain = rollDice() 
-    print(dieValuesListInMain)
-    sumOfRollDiceInMain = getSumOfRollDice(dieValuesListInMain) #this is the argument that goes in place of placeholder
-    print("Great job", userNameInMain +"!", "This is your current total!", sumOfRollDiceInMain)
+    playerNamesListinMain = getPlayerResults(howManyUsersInMain)
+    print (playerNamesListinMain)
 
 main() #calls the function
 
