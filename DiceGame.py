@@ -1,8 +1,10 @@
 import random #this is called a module
 
+# This prints/displays the welcome message
 def printWelcomeMessage():
     print("Welcome to The Dice Game")
 
+# This asks for input of how many players 
 def askHowManyUsers(userNumberofPlayersAllowed): #userNumberofPlayers is an argument
     howManyUsers = int(input ("How many people are playing today? Maximum No: " +  str (userNumberofPlayersAllowed)+ " "))
     return howManyUsers
@@ -22,6 +24,7 @@ def getPlayerResults(totalNumberOfPlayers):
         currentPlayerName = askUserName()
         playerNamesList.append(currentPlayerName)
 
+# this creates and returns both a player names list and their corresponding totals of their rolls based on the total number of players
     userDiceTotalsList = []
     for currentNameIndex in range(totalNumberOfPlayers):
         userInput = input(playerNamesList [currentNameIndex] + " Hit enter to Roll")
@@ -32,6 +35,7 @@ def getPlayerResults(totalNumberOfPlayers):
         print("Great Job! Your roll is:", currentUserDieValueList)
     return playerNamesList, userDiceTotalsList
 
+# This function uses the random module to create a list of random numbers between 1 and 6
 def rollDice(): #defining a function
     numberOfDice = 6
     dieRangeStart = 1 #relates to the randint function
@@ -91,7 +95,7 @@ def main():
     howManyUsersInMain = askHowManyUsers(numberOfPlayersAllowed)
 
     while howManyUsersInMain > numberOfPlayersAllowed:
-        revisedNumberofUsers = int(input ("sorry, the maximum number of players is " + str (numberOfPlayersAllowed) + ", please enter again: "))
+        revisedNumberofUsers = int(input ("Sorry, the maximum number of players is: " + str (numberOfPlayersAllowed) + ", please enter again: "))
         howManyUsersInMain = revisedNumberofUsers
         
     playerNamesListinMain, playersTotalsListinMain = getPlayerResults(howManyUsersInMain)
