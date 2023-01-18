@@ -29,7 +29,7 @@ def getPlayerResults(totalNumberOfPlayers):
         currentUserDieTotal = getSumOfRollDice(currentUserDieValueList)
         userDiceTotalsList.append(currentUserDieTotal)
         # print("Great Job! Your roll is:", currentUserDieValueList, "\nYour total is:", currentUserDieTotal)
-        # print("Great Job! Your roll is:", currentUserDieValueList)
+        print("Great Job! Your roll is:", currentUserDieValueList)
     return playerNamesList, userDiceTotalsList
 
 def rollDice(): #defining a function
@@ -48,7 +48,8 @@ def getSumOfRollDice(userDieValueList): #userDieValueList is a parameter (placeh
     for currentDieValue in userDieValueList:
         sumOfRollDice = sumOfRollDice + currentDieValue 
     return sumOfRollDice
-# 
+
+# This determines the winner and writes to a file with list of winner names
 def determineWinner(playerNames, playerTotals):
     # numberOfPlayers = len(playerNames)
 
@@ -64,6 +65,25 @@ def determineWinner(playerNames, playerTotals):
     # print out the name along with the total for the winner
     print("Congratulations!", winnerName, "you won with a total of:", winningNumber)
 
+    # List of Winners
+    # This opens the file in append mode which adds to the file
+    winningListFile = open("winningList.txt", "a")
+
+    # This is to write to the file
+    winningListFile.write("Winner: " + winnerName + "  Winning Number: " + str(winningNumber)+ "\n")
+
+    # Always have to close the file to stop buffer from overflowing (save resources in memory)
+    winningListFile.close()
+
+    # Can add a track function
+
+def readListofWinners():
+    winningListFile = open("winningList.txt", "r")
+    line = winningListFile.readline().rstrip("\n")
+    while line != "":
+        print(line)
+        line = winningListFile.readline().rstrip("\n")
+    winningListFile.close()
 
 def main():
     numberOfPlayersAllowed = 6
@@ -76,6 +96,11 @@ def main():
         
     playerNamesListinMain, playersTotalsListinMain = getPlayerResults(howManyUsersInMain)
     determineWinner(playerNamesListinMain, playersTotalsListinMain)
+    playerResponse = input ("Do you want to see winner results? Type y or n ")
+    print()
+    if playerResponse == "y": 
+        readListofWinners()
+    print("\nGood game!")
 
 main() #calls the function
 
