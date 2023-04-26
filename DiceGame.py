@@ -6,7 +6,7 @@ def printWelcomeMessage():
 
 # This asks for input of how many players 
 def askHowManyUsers(userNumberofPlayersAllowed): #userNumberofPlayers is an argument
-    howManyUsers = int(input ("How many people are playing today? Maximum No: " +  str (userNumberofPlayersAllowed)+ " "))
+    howManyUsers = int(input ("How many people are playing today (Maximum No is " +  str (userNumberofPlayersAllowed)+ ")?: "))
     return howManyUsers
 
 def askUserName():
@@ -16,13 +16,17 @@ def askUserName():
 def greetUser(userName):
     print("Hi", userName)
 
-# the goal of this function is to populate a list of: player names & player totals based on the input passed into from total number of players and returns both lists
-def getPlayerResults(totalNumberOfPlayers):
+def getPlayerNamesList(totalNumberOfPlayers):
     playerNamesList = []  #this is the list that stores all player names
     for currentUserNumber in range(1, totalNumberOfPlayers + 1):
         print("Player", str(currentUserNumber)+", ", end="")
         currentPlayerName = askUserName()
         playerNamesList.append(currentPlayerName)
+    return playerNamesList
+
+# the goal of this function is to use the list of names & player totals based on the input passed into from total number of players and returns both lists
+def getPlayerResults(totalNumberOfPlayers, playerNamesList):
+
 
 # this creates and returns both a player names list and their corresponding totals of their rolls based on the total number of players
     userDiceTotalsList = []
@@ -33,7 +37,7 @@ def getPlayerResults(totalNumberOfPlayers):
         userDiceTotalsList.append(currentUserDieTotal)
         # print("Great Job! Your roll is:", currentUserDieValueList, "\nYour total is:", currentUserDieTotal)
         print("Great Job! Your roll is:", currentUserDieValueList)
-    return playerNamesList, userDiceTotalsList
+    return userDiceTotalsList
 
 # This function uses the random module to create a list of random numbers between 1 and 6
 def rollDice(): #defining a function
@@ -90,16 +94,24 @@ def readListofWinners():
     winningListFile.close()
 
 def main():
-    numberOfPlayersAllowed = 6
-    printWelcomeMessage() #don't forget parenthesis to call the function
-    howManyUsersInMain = askHowManyUsers(numberOfPlayersAllowed)
+    userKeepPlaying = "y"
 
-    while howManyUsersInMain > numberOfPlayersAllowed:
-        revisedNumberofUsers = int(input ("Sorry, the maximum number of players is: " + str (numberOfPlayersAllowed) + ", please enter again: "))
+    NUMBER_OF_PLAYERS_ALLOWED = 6
+    printWelcomeMessage() #don't forget parenthesis to call the function
+    howManyUsersInMain = askHowManyUsers(NUMBER_OF_PLAYERS_ALLOWED)
+
+    while howManyUsersInMain > NUMBER_OF_PLAYERS_ALLOWED:
+        revisedNumberofUsers = int(input ("Sorry, the maximum number of players is: " + str (NUMBER_OF_PLAYERS_ALLOWED) + ", please enter again: "))
         howManyUsersInMain = revisedNumberofUsers
-        
-    playerNamesListinMain, playersTotalsListinMain = getPlayerResults(howManyUsersInMain)
-    determineWinner(playerNamesListinMain, playersTotalsListinMain)
+
+    playerNamesList = getPlayerNamesList(howManyUsersInMain)
+
+    while userKeepPlaying == "y":
+        playersTotalsListinMain = getPlayerResults(howManyUsersInMain, playerNamesList)
+        determineWinner(playerNamesList, playersTotalsListinMain)
+        userKeepPlaying = input ("Do you want to play again? Type y for YES or n for NO: ")
+
+
     playerResponse = input ("Do you want to see winner results? Type y or n ")
     print()
     if playerResponse == "y": 
@@ -112,5 +124,6 @@ main() #calls the function
 # def push(): 
 #     return baby
 # doctorsHands = push()
+
 
 
