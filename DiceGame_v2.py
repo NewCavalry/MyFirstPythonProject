@@ -27,16 +27,49 @@ def getPlayerNamesList(totalNumberOfPlayers):
 # the goal of this function is to use the list of names & player totals based on the input passed into from total number of players and returns both lists
 def getPlayerResults(totalNumberOfPlayers, playerNamesList):
 
-
 # this creates and returns both a player names list and their corresponding totals of their rolls based on the total number of players
     userDiceTotalsList = []
+    userRollSubtotalList = []
+    ONE_MULTIPLIER = 100
+    THREE_OF_A_KIND_MULTIPLIER = 100
+    FOUR_OF_A_KIND = 1000
+    FIVE_OF_A_KIND = 2000
+    SIX_OF_A_KIND = 3000
+
+    currentNumberCount = 0
     for currentNameIndex in range(totalNumberOfPlayers):
         userInput = input(playerNamesList [currentNameIndex] + " Hit enter to Roll")
         currentUserDieValueList = rollDice()
-        currentUserDieTotal = getSumOfRollDice(currentUserDieValueList)
+
+        dieRangeEnd = len(currentUserDieValueList)
+        
+        for currentNumber in range(1, len(currentUserDieValueList)+1):
+            if currentNumber in currentUserDieValueList:
+                currentNumberCount = currentUserDieValueList.count(currentNumber)
+            if currentNumber == 1:
+                if currentNumberCount < 4:
+                    userRollSubtotalList.append(currentNumberCount*ONE_MULTIPLIER)
+            if currentNumber == 2:
+                if currentNumberCount == 3:
+                    userRollSubtotalList.append(currentNumberCount*THREE_OF_A_KIND_MULTIPLIER)
+
+
+
+            if currentNumberCount == 4:
+                userRollSubtotalList.apend(FOUR_OF_A_KIND)
+            if currentNumberCount == 5:
+                userRollSubtotalList.apend(FIVE_OF_A_KIND)
+            if currentNumberCount == 6:
+                userRollSubtotalList.apend(SIX_OF_A_KIND)
+
+
+        currentUserDieTotal = getScoreofRollDice(userRollSubtotalList)
         userDiceTotalsList.append(currentUserDieTotal)
         # print("Great Job! Your roll is:", currentUserDieValueList, "\nYour total is:", currentUserDieTotal)
-        print("Great Job! Your roll is:", currentUserDieValueList)
+        print("Great Job! Your roll is:", currentUserDieValueList, "your total is:", sum(userRollSubtotalList))
+        currentNumberCount = 0
+        userRollSubtotalList = []
+
     return userDiceTotalsList
 
 # This function uses the random module to create a list of random numbers between 1 and 6
@@ -50,12 +83,20 @@ def rollDice(): #defining a function
         dieValuesList.append(randomNumber) #appends (or adds) randomNumber to the dieValuesList
     return dieValuesList
 
-# This function take in a user list accumulates it and then returns it.
-def getSumOfRollDice(userDieValueList): #userDieValueList is a parameter (placeholder)
-    sumOfRollDice = 0
-    for currentDieValue in userDieValueList:
-        sumOfRollDice = sumOfRollDice + currentDieValue 
-    return sumOfRollDice
+# This function checks for how many occurences of a die value.
+def singleNumberExists(anyList, phDieValue):
+    if phDieValue in anyList:
+        return True
+    else:
+        return False
+
+def getScoreofRollDice(aListofSubtotals):
+    return sum(aListofSubtotals)
+
+    # below is the same as the one line above
+    # totalOfRoll = sum(aListofSubtotals)
+    # return totalOfRoll
+
 
 # This determines the winner and writes to a file with list of winner names
 def determineWinner(playerNames, playerTotals):
