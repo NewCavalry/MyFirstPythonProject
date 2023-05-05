@@ -31,6 +31,7 @@ def getPlayerResults(totalNumberOfPlayers, playerNamesList):
     userDiceTotalsList = []
     userRollSubtotalList = []
     ONE_MULTIPLIER = 100
+    FIVE_MULTIPLIER = 50
     THREE_OF_A_KIND_MULTIPLIER = 100
     FOUR_OF_A_KIND = 1000
     FIVE_OF_A_KIND = 2000
@@ -49,11 +50,25 @@ def getPlayerResults(totalNumberOfPlayers, playerNamesList):
             if currentNumber == 1:
                 if currentNumberCount < 4:
                     userRollSubtotalList.append(currentNumberCount*ONE_MULTIPLIER)
+            if currentNumber == 5:
+                if currentNumberCount < 4:
+                    userRollSubtotalList.append(currentNumberCount*FIVE_MULTIPLIER)
+
             if currentNumber == 2:
                 if currentNumberCount == 3:
                     userRollSubtotalList.append(currentNumberCount*THREE_OF_A_KIND_MULTIPLIER)
-
-
+            if currentNumber == 3:
+                if currentNumberCount == 3:
+                    userRollSubtotalList.append(currentNumberCount*THREE_OF_A_KIND_MULTIPLIER)
+            if currentNumber == 4:
+                if currentNumberCount == 3:
+                    userRollSubtotalList.append(currentNumberCount*THREE_OF_A_KIND_MULTIPLIER)
+            if currentNumber == 5:
+                if currentNumberCount == 3:
+                    userRollSubtotalList.append(currentNumberCount*THREE_OF_A_KIND_MULTIPLIER)
+            if currentNumber == 6:
+                if currentNumberCount == 3:
+                    userRollSubtotalList.append(currentNumberCount*THREE_OF_A_KIND_MULTIPLIER)
 
             if currentNumberCount == 4:
                 userRollSubtotalList.apend(FOUR_OF_A_KIND)
@@ -83,12 +98,6 @@ def rollDice(): #defining a function
         dieValuesList.append(randomNumber) #appends (or adds) randomNumber to the dieValuesList
     return dieValuesList
 
-# This function checks for how many occurences of a die value.
-def singleNumberExists(anyList, phDieValue):
-    if phDieValue in anyList:
-        return True
-    else:
-        return False
 
 def getScoreofRollDice(aListofSubtotals):
     return sum(aListofSubtotals)
@@ -172,6 +181,13 @@ main() #calls the function
 #     for currentDieValue in userDieValueList:
 #         sumOfRollDice = sumOfRollDice + currentDieValue 
 #     return sumOfRollDice
+
+# This function checks for how many occurences of a die value.
+# def singleNumberExists(anyList, phDieValue):
+#     if phDieValue in anyList:
+#         return True
+#     else:
+#         return False
 
 
 
