@@ -36,6 +36,10 @@ def getPlayerResults(totalNumberOfPlayers, playerNamesList):
     FOUR_OF_A_KIND = 1000
     FIVE_OF_A_KIND = 2000
     SIX_OF_A_KIND = 3000
+    STRAIGHT = 1500
+
+    STRAIGHT_CONSTANT = 6
+
 
     currentNumberCount = 0
     for currentNameIndex in range(totalNumberOfPlayers):
@@ -47,29 +51,33 @@ def getPlayerResults(totalNumberOfPlayers, playerNamesList):
         for currentNumber in range(1, len(currentUserDieValueList)+1):
             if currentNumber in currentUserDieValueList:
                 currentNumberCount = currentUserDieValueList.count(currentNumber)
+            else:
+                currentNumberCount = 0
+
             if currentNumber == 1:
                 if currentNumberCount < 4:
                     userRollSubtotalList.append(currentNumberCount*ONE_MULTIPLIER)
             if currentNumber == 5:
-                if currentNumberCount < 4:
+                if currentNumberCount < 3:
                     userRollSubtotalList.append(currentNumberCount*FIVE_MULTIPLIER)
 
             if currentNumber == 2:
                 if currentNumberCount == 3:
-                    userRollSubtotalList.append(currentNumberCount*THREE_OF_A_KIND_MULTIPLIER)
+                    userRollSubtotalList.append(currentNumber*THREE_OF_A_KIND_MULTIPLIER)
             if currentNumber == 3:
                 if currentNumberCount == 3:
-                    userRollSubtotalList.append(currentNumberCount*THREE_OF_A_KIND_MULTIPLIER)
+                    userRollSubtotalList.append(currentNumber*THREE_OF_A_KIND_MULTIPLIER)
             if currentNumber == 4:
                 if currentNumberCount == 3:
-                    userRollSubtotalList.append(currentNumberCount*THREE_OF_A_KIND_MULTIPLIER)
+                    userRollSubtotalList.append(currentNumber*THREE_OF_A_KIND_MULTIPLIER)
             if currentNumber == 5:
                 if currentNumberCount == 3:
-                    userRollSubtotalList.append(currentNumberCount*THREE_OF_A_KIND_MULTIPLIER)
+                    userRollSubtotalList.append(currentNumber*THREE_OF_A_KIND_MULTIPLIER)
             if currentNumber == 6:
                 if currentNumberCount == 3:
-                    userRollSubtotalList.append(currentNumberCount*THREE_OF_A_KIND_MULTIPLIER)
+                    userRollSubtotalList.append(currentNumber*THREE_OF_A_KIND_MULTIPLIER)
 
+        # Below is for 4 of a kind through 6 of a kind
             if currentNumberCount == 4:
                 userRollSubtotalList.apend(FOUR_OF_A_KIND)
             if currentNumberCount == 5:
@@ -77,11 +85,18 @@ def getPlayerResults(totalNumberOfPlayers, playerNamesList):
             if currentNumberCount == 6:
                 userRollSubtotalList.apend(SIX_OF_A_KIND)
 
+         # Below is for a straight
+            if len(set(currentUserDieValueList)) == STRAIGHT_CONSTANT:
+                userRollSubtotalList = []
+                userRollSubtotalList.append(STRAIGHT)
+                break
+       
+
 
         currentUserDieTotal = getScoreofRollDice(userRollSubtotalList)
         userDiceTotalsList.append(currentUserDieTotal)
         # print("Great Job! Your roll is:", currentUserDieValueList, "\nYour total is:", currentUserDieTotal)
-        print("Great Job! Your roll is:", currentUserDieValueList, "your total is:", sum(userRollSubtotalList))
+        print("Great Job! Your roll is:", currentUserDieValueList, "your total is:", sum(userRollSubtotalList),end="\n \n")
         currentNumberCount = 0
         userRollSubtotalList = []
 
