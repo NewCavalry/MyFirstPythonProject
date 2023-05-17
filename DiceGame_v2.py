@@ -24,6 +24,53 @@ def getPlayerNamesList(totalNumberOfPlayers):
         playerNamesList.append(currentPlayerName)
     return playerNamesList
 
+def isThreePairs(aList):
+    uniqueNumbersList = set(aList)
+    isThreePairsBoolean = True
+
+    for currentUniqueNumber in uniqueNumbersList:
+        if aList.count(currentUniqueNumber) !=2:
+            isThreePairsBoolean = False
+    if isThreePairsBoolean == True:
+        print ("-----------------------------------------------Great job! You got Three Pairs!")
+
+    return isThreePairsBoolean   
+
+def isTwoTriplets(aList):
+    uniqueNumbersList = set(aList)
+    isTwoTripletsBoolean = True
+
+    if len(uniqueNumbersList) !=2:
+        isTwoTripletsBoolean = False
+    
+    for currentUniqueNumber in uniqueNumbersList:
+        if aList.count(currentUniqueNumber) !=3:
+            isTwoTripletsBoolean = False
+    if isTwoTripletsBoolean == True:
+        print ("-----------------------------------------------Great job! You got Two Triplets!")
+    return isTwoTripletsBoolean   
+
+def isFourOfAKindAndPair(aList):
+    uniqueNumbersDictionary = set(aList)  # This create dictionary {}
+    uniqueNumbersList = list( uniqueNumbersDictionary ) # Convert the dictionary to a list []
+
+    isFourOfAKindAndAPairBoolean = True
+    
+    if len( uniqueNumbersList ) != 2:
+        isFourOfAKindAndAPairBoolean = False
+
+    firstUniqueNumberCount = aList.count( uniqueNumbersList[0] )  
+    # secondUniqueNumberCount = aList.count( uniqueNumbersList[1] )
+
+    if firstUniqueNumberCount != 2 and firstUniqueNumberCount != 4:
+        isFourOfAKindAndAPairBoolean = False
+
+    if isFourOfAKindAndAPairBoolean == True:
+        print( "----------------------------------------------Woohoo! You got a Four of a kind and a Pair!!!!" )
+        
+    return isFourOfAKindAndAPairBoolean
+
+
 # the goal of this function is to use the list of names & player totals based on the input passed into from total number of players and returns both lists
 def getPlayerResults(totalNumberOfPlayers, playerNamesList):
 
@@ -37,9 +84,12 @@ def getPlayerResults(totalNumberOfPlayers, playerNamesList):
     FIVE_OF_A_KIND = 2000
     SIX_OF_A_KIND = 3000
     STRAIGHT = 1500
+    THREE_PAIRS = 1500
+    TWO_TRIPLETS = 2500
+    FOUR_OF_A_KIND_PLUS_A_PAIR = 1500
+    HARD_STRAIGHT = 5000
 
     STRAIGHT_CONSTANT = 6
-
 
     currentNumberCount = 0
     for currentNameIndex in range(totalNumberOfPlayers):
@@ -79,11 +129,11 @@ def getPlayerResults(totalNumberOfPlayers, playerNamesList):
 
         # Below is for 4 of a kind through 6 of a kind
             if currentNumberCount == 4:
-                userRollSubtotalList.apend(FOUR_OF_A_KIND)
+                userRollSubtotalList.append(FOUR_OF_A_KIND)
             if currentNumberCount == 5:
-                userRollSubtotalList.apend(FIVE_OF_A_KIND)
+                userRollSubtotalList.append(FIVE_OF_A_KIND)
             if currentNumberCount == 6:
-                userRollSubtotalList.apend(SIX_OF_A_KIND)
+                userRollSubtotalList.append(SIX_OF_A_KIND)
 
          # Below is for a straight
             if len(set(currentUserDieValueList)) == STRAIGHT_CONSTANT:
@@ -91,6 +141,23 @@ def getPlayerResults(totalNumberOfPlayers, playerNamesList):
                 userRollSubtotalList.append(STRAIGHT)
                 break
        
+         # Below is for a Three Pairs
+            if isThreePairs(currentUserDieValueList):
+                userRollSubtotalList = []
+                userRollSubtotalList.append(THREE_PAIRS)
+                break
+
+         # Below is for a Two Triplets
+            if isTwoTriplets(currentUserDieValueList):
+                userRollSubtotalList = []
+                userRollSubtotalList.append(TWO_TRIPLETS)
+                break
+
+         # Below is for Four of Kind and a Pair
+            if isFourOfAKindAndPair(currentUserDieValueList):
+                userRollSubtotalList = []
+                userRollSubtotalList.append(FOUR_OF_A_KIND_PLUS_A_PAIR)
+                break
 
 
         currentUserDieTotal = getScoreofRollDice(userRollSubtotalList)
@@ -203,6 +270,14 @@ main() #calls the function
 #         return True
 #     else:
 #         return False
+
+# four of a kind and a pair
+# Two triplets
+# Hard straight (1,2,3,4,5,6)
+# Cute messages
+# Tie issue
+# Leaderboard
+# One Roll or Full game
 
 
 
